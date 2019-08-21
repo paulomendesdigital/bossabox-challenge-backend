@@ -1,0 +1,104 @@
+FORMAT: 1A
+
+# VUTTR
+
+Repositório para gerenciar ferramentas com seus respectivos nomes, links, descrições e tags
+
+# Group API
+
+## Tools [/tools]
+
+### Listar ferramentas [GET]
+
++ Response 200 (application/json)
+    + Attributes(array[ToolDB])
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
+### Cadastrar ferramenta [POST]
+
++ Request Cadastrar uma ferramenta
+
+    + Headers
+
+            Accept: application/json
+            Content-Type: application/json
+    + Attributes (Tool)
+
++ Response 201 (application/json)
+    + Attributes (ToolDB)
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
+
+## Tool tag [/tools?tag={tag}]
+
++ Parameters
+    + tag: node (string) - Tag da ferramenta
+
+### Listar ferramenta [GET]
+
++ Response 200 (application/json)
+    + Attributes(array[ToolDB])
+
+
+## Tool [/tools/{tool_id}]
+
++ Parameters
+    + tool_id: 1 (number, required) - ID da ferramenta
+
+### Ver ferramenta [GET]
+
++ Response 200 (application/json)
+    + Attributes (ToolDB)
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
+### Alterar ferramenta [PUT]
+
++ Request Alterar uma ferramenta
+
+    + Headers
+
+            Accept: application/json
+            Content-Type: application/json
+    + Attributes (Tool)
+
++ Response 200 (application/json)
+    + Attributes (ToolDB)
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
+### Excluir ferramenta [DELETE]
+
++ Response 204
+
++ Response 400 (application/json)
+    + Attributes (Error)
+
+
+# Data Structures
+
+## Tool (object)
++ title: hotel (string) - Título da ferramenta
++ link: https://github.com/typicode/hotel (string) - url da ferramenta
++ description: Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box. (string) - Descrição da ferramenta
++ tags: node, organizing, webapps, domain, developer, https, proxy (array) - Tags da ferramenta
+
+## ToolDB (object)
++ _id: 5d5d762698d9752b246da969 (string) - Id da ferramenta
++ title: hotel (string) - Título da ferramenta
++ link: https://github.com/typicode/hotel (string) - url da ferramenta
++ description: Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box. (string) - Descrição da ferramenta
++ tags: node, organizing, webapps, domain, developer, https, proxy (array) - Tags da ferramenta
++ createdAt: 2019-08-21T16:49:42.047Z - Data de criação da ferramenta
++ updatedAt: 2019-08-21T18:26:41.753Z - Data da última atualização da ferramenta
++ __v: 0 (number) - Chave que é incrementada quando acontece uma alteração na estrutura de uma coleção que já possua documentos
+
+## Error (object)
++ code: 400 (number) - Status code
++ message: Mensagem do status (string) - Mensagem do status
