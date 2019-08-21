@@ -2,72 +2,62 @@ const Tool = require('../models/Tool')
 
 module.exports = {
     async index(req, res) {
-
-        try {
-            tags = {}
-            
-            if (Object.keys(req.query).length > 0 && Object.keys(req.query) == 'tag') {
-                tags = {'tags': req.query.tag}
-            }
-
-            const tools = await Tool.find(tags)
-    
-            return res.json(tools)
-
-        } catch (err) {
-            return res.send(err)
+        tags = {}
+        
+        if (Object.keys(req.query).length > 0 && Object.keys(req.query) == 'tag') {
+            tags = {'tags': req.query.tag}
         }
 
+        const tools = await Tool.find(tags)
+                                    .catch(err => {
+                                                var error = {"code": 400, "message": err.message}
+                                                return res.status(400).json(error)
+                                            })
+
+        return res.json(tools)
+    },
+
+    async store(req, res) {
+        
+        const tool = await Tool.create(req.body)
+                                    .catch(err => {
+                                                var error = {"code": 400, "message": err.message}
+                                                return res.status(400).json(err)
+                                            })
+
+        return res.status(201).json(tool)
     },
 
     async show(req, res) {
 
-        try {
-            const tool = await Tool.findById(req.params.id)
-                                        .catch(err => res.status(400).json(err))
+        const tool = await Tool.findById(req.params.id)
+                                    .catch(err => {
+                                                var error = {"code": 400, "message": err.message}
+                                                return res.status(400).json(error)
+                                            })
 
-            return res.json(tool)
-
-        } catch (err) {
-            return res.send(err)
-        }
+        return res.json(tool)
     },
 
     async update(req, res) {
 
-        try {
-            const tool = await Tool.findByIdAndUpdate(req.params.id, req.body, {new: true})
-                                        .catch(err => res.status(400).json(err))
+        const tool = await Tool.findByIdAndUpdate(req.params.id, req.body, {new: true})
+                                    .catch(err => {
+                                        var error = {"code": 400, "message": err.message}
+                                        return res.status(400).json(error)
+                                    })
 
-            return res.json(tool)
-
-        } catch (err) {
-            return res.send(err)
-        }
-    },
-
-    async store(req, res) {
-        try {
-            const tool = await Tool.create(req.body)
-                                        .catch(err => res.status(400).json(err))
-
-            return res.status(201).json(tool)
-
-        } catch (err) {
-            return res.send(err)
-        }
+        return res.json(tool)
     },
 
     async destroy(req, res) {
-        try {
-            
-            await Tool.findByIdAndRemove(req.params.id)
-                                .catch(err => res.status(400).json(err))
+        
+        const tool = await Tool.findByIdAndRemove(req.params.id)
+                                    .catch(err => {
+                                        var error = {"code": 500, "message": err.message}
+                                        return res.status(500).json(error)
+                                    })
 
-            return res.status(204).send()
-            
-        } catch (err) {
-            return res.send(err)
-        }
+        return res.status(204).send()
     }
 }
