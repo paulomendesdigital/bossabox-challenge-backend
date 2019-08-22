@@ -46,6 +46,19 @@ node server.js
 
 ## Testando endpoints
 - Um bom programa para testar os endpoints é o [Insomnia](https://insomnia.rest/download/)
+- Endpoints
+  - /tools [GET]
+    - Exibe todas as ferramentas cadastradas no banco de dados
+  - /tools?tag=node [GET]
+    - Exibe as ferramentas que possuem a tag informada na query (ex: node)
+  - /tools [POST]
+    - Cadastra uma nova ferramenta com o objeto JSON informado no request
+  - /tools/:id [GET]
+    - Exibe a ferramenta que possui o id informado no parâmetro
+  - /tools/:id [PUT]
+    - Atualiza a ferramenta que possui o id informado no parâmetro, com o objeto JSON informado no request
+  - /tools/:id [DELETE]
+    - Deleta a ferramenta que possui o id informado no parâmetro
 
 ### Browser
 
